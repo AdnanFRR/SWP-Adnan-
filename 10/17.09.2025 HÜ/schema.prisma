@@ -1,4 +1,5 @@
-generator client1 {
+// schema.prisma. Aufgabe Normalfälle einbauen
+generator client {
   provider = "prisma-client-js"
 }
 
@@ -18,7 +19,7 @@ model Question {
   difficultyId     String
   difficulty       Difficulty @relation(fields: [difficultyId], references: [id], onDelete: Cascade)
   
-  // Incorrect Answers als JSON speichern (einfacher)
+  // Incorrect Answers als separate Tabelle
   incorrect_answers Answers[] 
   
   createdAt        DateTime  @default(now())
