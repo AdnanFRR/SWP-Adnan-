@@ -1,11 +1,13 @@
 // schema.prisma. Aufgabe Normalfälle einbauen
-generator client {
-  provider = "prisma-client-js"
+datasource db {
+    provider = "sqlite"
+    url      = "file:../dev.db"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+generator client {
+    provider = "prisma-client"
+    output   = "client"
+    runtime  = "deno"
 }
 
 model Question {
