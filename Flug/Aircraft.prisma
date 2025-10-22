@@ -1,0 +1,56 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client"
+  output = "client"
+  runtime = "deno"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Aircraft {
+  id              String   @id @default(cuid())
+  model           String
+  seats           Int
+  flights         Flight[]
+  airline         Airline  @relation(fields: [airlineId], references: [id])
+  airlineId       String
+  hangerAirportId String
+}
+
+model Airport {
+  id         String   @id @default(cuid())
+  name       String
+  city       String
+  iatacode       String   @unique
+}
+
+model Passenger {
+  id       String   @id @default(cuid())
+  fullname String
+  email    String   @unique
+  flights  Flight[]
+}
+
+model Airline {
+  id        String    @id @default(cuid())
+  name      String
+  aircrafts Aircraft[]
+  flights   Flight[]
+}
+
+model Flight {
+  id                   String     @id @default(cuid())
+  route_name           String
+  duration_s           Int        // Dauer in Sekunden
+  departure_datetime   DateTime
+  aircraft             Aircraft   @relation(fields: [aircraftId], references: [id])
+  aircraftId           String
+  operating_airline    Airline    @relation(fields: [airlineId], references: [id])
+  airlineId            String
+  departureAirportId   String
+  destinationAirportId String
+  passengers           Passenger[]
+}
