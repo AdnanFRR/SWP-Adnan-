@@ -76,5 +76,5 @@ for (let i = 0; i < flightsToCreate; i++) {
   }
 }
 
-console.log("✅ Seeding complete!");
+console.log("Seeding complete!");
 await prisma.$disconnect();
